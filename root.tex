@@ -1,123 +1,171 @@
-\input{preamble}
-
+% chktex-file 1
+\input{lib/preamble}
+\addbibresource{citations.bib}
 
 \begin{document}
 
 % working title, update later
-\title{Building Robot 2024}
+\title{Building Robot 2024 (working title)}
 \author{Youwen Wu, Warren Lin}
 \date{\today}
 \maketitle
 
 \begin{abstract}
   Team 1280 designed an innovative robot for the 2024 FRC Crescendo
-competition through an interdisciplinary and iterative process. Key
-features include a precision ball intake, high-speed launcher, agile
-drivetrain, and advanced autonomous capabilities. This abstract details
-the team's engineering approach, from initial brainstorming to final
-validation, that resulted in a high-performing robot excelling in the
-dynamic competition environment.
+  competition through an interdisciplinary and iterative process. Key
+  features include a precision ring intake, high-speed launcher, agile
+  swerve drivebase, and advanced autonomous capabilities. This writeup
+  details the team's engineering approach, from initial brainstorming to
+  final validation, that resulted in a high-performing robot excelling
+  in the competition environment.
 \end{abstract}
 
 
 \section{Introduction}
 
-Our 2024 robot incorporates numerous 
+Our 2024 robot incorporates numerous new technologies we've been
+exploring this year. Breaking a longstanding tradition of using a
+rudimentary tank drive system, we used a 4-wheel swerve drivebase that
+enables much more nimble and precise robot movements. We also were able
+to implement computer vision, upgrading from a Microsoft webcam to two
+limelights with a Google Coral TPU to identify game pieces, april tags,
+and other visual fiducials. To create all of these features, we
+underwent a massive overhaul of our prototyping and build process. In
+this writeup, we'll discuss all of the work we accomplished this season
+and our process.
 
-\section{Background}
+\section{Innovation}
+It's useful for us to first briefly present some of our ``greatest
+hits'' in robot engineering and innovation this season, and then go into
+further depth on our specific implementation in later sections.
 
-Give a brief summary of the physical theory, include any equations necessary, and cite any references you want to include. Here is how you insert an equation. According to
-references the dependence of interest is given
-by
-\begin{gather*}
-  \mathcal{L} =  \frac{1}{2} m \ell^2 {( \dot{\theta}+\dot{\phi}_0)}^2 - m g_e(t) \ell \cos(\theta)\\
-  \\
-  m\ell^2 (\ddot{\theta} + \ddot{\phi}_0) = mg_e\ell\sin(\theta)\\
-\end{gather*}
-\begin{equation}
-  \ddot{\phi}(t) = -\frac{g_e(t)}{\ell} \sin\left(\phi(t)-\phi_0(t)\right)
-  \label{Eq:equation1} %the label lets you refer to the equation later
-\end{equation}
+\subsection{Drivebase}
 
-\blindtext{} %delete this line
+Switching from tank drive to swerve drive was a big decision, and meant
+we had to do a lot of things differently. First, we couldn't draw on any
+previous designs or code, and basically had to start fresh with a brand
+new drivebase design. Luckily, our Rev Robotics MAXSwerve
+modules~\cite{revswervemodule} had ample documentation and integration
+with WPILib, so we were able to build our drivebase prior to kickoff,
+and begin writing a library for controlling it early into the season.
 
-\section{Methods}
-
-
-Give a schematic of the experimental setup{(s)} used in the experiment (see
-figure). Give the description of  abbreviations
-either in the figure caption or in the text. Write a description of what is
-going on.
-
-%\begin{figure}[ht] 
-% read manual to see what [ht] means and for other possible options
-%        \centering \includegraphics[width=0.8\columnwidth]{sr_setup}
-% note that in above figure file name, "sr_setup",
-% the file extension is missing. LaTeX is smart enough to find
-% apropriate one (i.e. pdf, png, etc.)
-% You can add this extention yourself as it seen below
-% both notations are correct but above has more flexibility
-%\includegraphics[width=1.0\columnwidth]{sr_setup.pdf}
-%        \caption{
-%                \label{fig:samplesetup} % spaces are big no-no withing labels
-% things like fig: are optional in the label but it helps
-% to orient yourself when you have multiple figures,
-% equations and tables
-%                Every figure MUST have a caption.
-%        }
-%\end{figure}
-
-and eventually arrived to the
-balanced photodiode as seen in the figure.
+% TODO: add an image of the swerve drivebase
 
 
-\section{Results}
+\subsection{Vision}
 
-In this section you will need to show your experimental results. Use tables and
-graphs when it is possible.
+We vastly expanded our computer vision capabilities this year. In
+2023, we had a Microsoft webcam which streamed a low-resolution camera
+feed to the driver dashboard, and had no practical application for even
+basic vision tasks, such as identifying visual fiducials like april
+tags. This year, we got our hands on two Limelight v3s~\cite{limelight},
+which are a full low/no code computer vision solution, with
+out-of-the-box april tag detection. It also integrates seamlessly with
+our new Coral TPU~\cite{coral}, which provides hardware acceleration for
+Limelight to run neural networks such as note classifiers, which enable
+the detection of game pieces via machine learning algorithms, previously
+unfeasible for us. We also experimented with Microsoft's Kinect system,
+which, though originally designed for motion gaming on the Xbox, has
+proven to be an extremely powerful depth sensor and motion capture tool,
+a reputation proven by its use in research laboratories around the
+world~\cite{kinectpaper}. In the end, we made the controversial and
+difficult decision to abandon the Kinect in production this year due to
+extensive cost-benefit analysis determining that the opportunity cost of
+diverting precious build season time to it was too great of a risk.\@
 
 
-Analysis of equatio shows \ldots
+\subsection{Driver Controls}
+
+We also focused on creating an improved driver experience this year. One
+of our main issues in previous years was the lack of driver practice and
+experience operating the robot and its control interface. This was
+partly due to poor time management on our part and partly due to
+unintuitively designed controls and user interfaces. One of our main
+goals this year was to create a slick and easy driver experience to
+reduce as much human error and friction as possible. We implemented
+multiple separate drive modes and selectors to allow a customizable
+experience. The de facto standard for FRC robot driver dashboard is the
+Shuffleboard, included as part of the FRC Game Tools software
+distribution from LabView. This piece of archaic technology has an
+outdated user interface that can only provide rudimentary data and
+visualizations from the robot. This season however, we decided to create
+our own proprietary driver dashboard for the first time. This dashboard,
+dubbed ``Jankboard,'' has features like collision detection, 3D robot
+visualization, and links directly to our other driver features like
+speed and drive modes.
+
+% TODO: add more sections
+
+\section{Drivebase}
+
+% TODO: add yapping about the drivebase and how good it is
 
 \blindtext{}
-
-For example, it is easy to conclude that the
-experiment and theory match each other rather well if you look at
-
-
-\section{Conclusions}
-Here you briefly summarize your findings. Did you learn any new physics? Was everything as expected?
-
 \blindtext{}
 
-\section{Future Work}
-Since you had limited time to work on this project, what questions are left outstanding? What would be your next steps?
+
+\section{Vision}
+
+% TODO: add yapping about vision
+
+\subsection{How we build BozoVision}
+
+% TODO: add deeper implementation details about vision
 
 \blindtext{}
+\blindtext{}
 
-%++++++++++++++++++++++++++++++++++++++++
-% References section will be created automatically 
-% with inclusion of "thebibliography" environment
-% as it shown below. See text starting with line
-% \begin{thebibliography}{99}
-% Note: with this approach it is YOUR responsibility to put them in order
-% of appearance.
+\section{Driver Controls}
 
-\begin{thebibliography}{99}
+One of our biggest weaknesses in previous years was with the driver's
+mastery (or lack thereof) over our robot's controls. No matter how well
+the robot was designed, it was ultimately held back by a lack of driver
+familiarity with the control systems. We aimed to avoid this issue this
+year by investing heavily into the driver's controls.
 
-  \bibitem{melissinos}
-  A.~C. Melissinos and J. Napolitano, \textit{Experiments in Modern Physics},
-  (Academic Press, New York, 2003).
+\subsection{Drive modes and the gear selector}
 
-  \bibitem{Cyr}
-  N.\ Cyr, M.\ T$\hat{e}$tu, and M.\ Breton,
-  % "All-optical microwave frequency standard: a proposal,"
-  IEEE Trans.\ Instrum.\ Meas.\ \textbf{42}, 640 (1993).
+One of our major developments was the gear/drive mode selector system
+(these terms may be used interchangeably throughout this paper). With
+clear and distinct ``gears'' separating each of our operating modes,
+mental stress on the driver is vastly reduced, as they no longer have to
+think about whether they have some feature like ``reverse enabled,'' but
+instead can simply think about what ``gear'' they are in. This subtle
+but important paradigm shift allows the driver to easily choose the
+right settings to fulfill their current needs without thinking about
+convoluted control schemes.
 
-  \bibitem{Wiki} \emph{Expected value},  available at
-  \texttt{http://en.wikipedia.org/wiki/Expected\_value}.
+\subsubsection{How we created drive modes}
+% TODO: talk more about the drive modes and their implementation in
+% code, and their streaming via network tables
+\blindtext{}
 
-\end{thebibliography}
+\subsection{Dashboard}
 
+Something we worked on this season which many FRC teams often overlook
+was the driver dashboard. An amazing robot and control scheme mean
+nothing if vital information is not quickly and intuitively conveyed to
+the driver. With this in mind, we set out to design our own dashboard
+which was tightly integrated with our specific robot controls and
+features to bring out their fullest potential, dubbed the ``Jankboard''.
+Despite being christened after the term ``jank,'' the Jankboard is
+anything but. It has a full 3D driver visualization that automatically
+syncs and updates with the real-time status of the robot, and responds
+to user actions like changing drive or speed modes. It also warns the
+user of imminent collision, and reports useful telemetry information
+like speed, heading, etc.
+
+\subsubsection{How we built Jankboard}
+
+Jankboard is one of our only programming projects not made with Java.
+Its frontend is build using the Svelte framework and TypeScript, and its
+backend which handles calculations and telemetry uplink with our robot
+is written in Rust, using a custom FRC NetworkTables v4 implementation.
+
+
+% TODO: discuss the genius of jankboard
+
+
+\printbibliography
 
 \end{document}
