@@ -9,8 +9,23 @@ on:
       - main
 
 jobs:
-  build_and_release:
+  compile_latex:
     runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Compile LaTeX
+        uses: hspaans/latexmk-action@v1
+        with:
+          format: pdf
+          filename: root.tex
+
+  create_release:
+    needs: compile_latex
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout code
@@ -19,12 +34,6 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
-
-      - name: Compile LaTeX
-        uses: hspaans/latexmk-action@v1
-        with:
-          format: pdf
-          filename: root.tex
 
       - name: Create Release
         id: create_release
