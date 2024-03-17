@@ -35,136 +35,26 @@ this writeup, we'll discuss all of the work we accomplished this season
 and our process.
 
 \section{Innovation}
-It's useful for us to first briefly present some of our ``greatest
-hits'' in robot engineering and innovation this season, and then go into
-further depth on our specific implementation in later sections.
 
-\subsection{Drivebase}
-
-Switching from tank drive to swerve drive was a big decision, and meant
-we had to do a lot of things differently. First, we couldn't draw on any
-previous designs or code, and basically had to start fresh with a brand
-new drivebase design. Luckily, our Rev Robotics MAXSwerve
-modules~\cite{revswervemodule} had ample documentation and integration
-with WPILib, so we were able to build our drivebase prior to kickoff,
-and begin writing a library for controlling it early into the season.
-
-% TODO: add an image of the swerve drivebase
-
-
-\subsection{Vision}
-
-We vastly expanded our computer vision capabilities this year. In
-2023, we had a Microsoft webcam which streamed a low-resolution camera
-feed to the driver dashboard, and had no practical application for even
-basic vision tasks, such as identifying visual fiducials like april
-tags. This year, we got our hands on two Limelight v3s~\cite{limelight},
-which are a full low/no code computer vision solution, with
-out-of-the-box april tag detection. It also integrates seamlessly with
-our new Coral TPU~\cite{coral}, which provides hardware acceleration for
-Limelight to run neural networks such as note classifiers, which enable
-the detection of game pieces via machine learning algorithms, previously
-unfeasible for us. We also experimented with Microsoft's Kinect system,
-which, though originally designed for motion gaming on the Xbox, has
-proven to be an extremely powerful depth sensor and motion capture tool,
-a reputation proven by its use in research laboratories around the
-world~\cite{kinectpaper}. In the end, we made the controversial and
-difficult decision to abandon the Kinect in production this year due to
-extensive cost-benefit analysis determining that the opportunity cost of
-diverting precious build season time to it was too great of a risk.\@
-
-
-\subsection{Driver Controls}
-
-We also focused on creating an improved driver experience this year. One
-of our main issues in previous years was the lack of driver practice and
-experience operating the robot and its control interface. This was
-partly due to poor time management on our part and partly due to
-unintuitively designed controls and user interfaces. One of our main
-goals this year was to create a slick and easy driver experience to
-reduce as much human error and friction as possible. We implemented
-multiple separate drive modes and selectors to allow a customizable
-experience. The de facto standard for FRC robot driver dashboard is the
-Shuffleboard, included as part of the FRC Game Tools software
-distribution from LabView. This piece of archaic technology has an
-outdated user interface that can only provide rudimentary data and
-visualizations from the robot. This season however, we decided to create
-our own proprietary driver dashboard for the first time. This dashboard,
-dubbed ``Jankboard,'' has features like collision detection, 3D robot
-visualization, and links directly to our other driver features like
-speed and drive modes.
+\input{src/innovations}
 
 % TODO: add more sections
 
 \section{Drivebase}
 
 % TODO: add yapping about the drivebase and how good it is
-
-\blindtext{}
-\blindtext{}
-
+\input{src/drivebase}
 
 \section{Vision}
 
 % TODO: add yapping about vision
-
-\subsection{How we build BozoVision}
-
-% TODO: add deeper implementation details about vision
-
-\blindtext{}
-\blindtext{}
+\input{src/vision}
 
 \section{Driver Controls}
 
-One of our biggest weaknesses in previous years was with the driver's
-mastery (or lack thereof) over our robot's controls. No matter how well
-the robot was designed, it was ultimately held back by a lack of driver
-familiarity with the control systems. We aimed to avoid this issue this
-year by investing heavily into the driver's controls.
-
-\subsection{Drive modes and the gear selector}
-
-One of our major developments was the gear/drive mode selector system
-(these terms may be used interchangeably throughout this paper). With
-clear and distinct ``gears'' separating each of our operating modes,
-mental stress on the driver is vastly reduced, as they no longer have to
-think about whether they have some feature like ``reverse enabled,'' but
-instead can simply think about what ``gear'' they are in. This subtle
-but important paradigm shift allows the driver to easily choose the
-right settings to fulfill their current needs without thinking about
-convoluted control schemes.
-
-\subsubsection{How we created drive modes}
-% TODO: talk more about the drive modes and their implementation in
-% code, and their streaming via network tables
-\blindtext{}
-
-\subsection{Dashboard}
-
-Something we worked on this season which many FRC teams often overlook
-was the driver dashboard. An amazing robot and control scheme mean
-nothing if vital information is not quickly and intuitively conveyed to
-the driver. With this in mind, we set out to design our own dashboard
-which was tightly integrated with our specific robot controls and
-features to bring out their fullest potential, dubbed the ``Jankboard''.
-Despite being christened after the term ``jank,'' the Jankboard is
-anything but. It has a full 3D driver visualization that automatically
-syncs and updates with the real-time status of the robot, and responds
-to user actions like changing drive or speed modes. It also warns the
-user of imminent collision, and reports useful telemetry information
-like speed, heading, etc.
-
-\subsubsection{How we built Jankboard}
-
-Jankboard is one of our only programming projects not made with Java.
-Its frontend is build using the Svelte framework and TypeScript, and its
-backend which handles calculations and telemetry uplink with our robot
-is written in Rust, using a custom FRC NetworkTables v4 implementation.
-
+\input{src/controls}
 
 % TODO: discuss the genius of jankboard
-
 
 \printbibliography
 

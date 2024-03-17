@@ -1,0 +1,58 @@
+It's useful for us to first briefly present some of our ``greatest
+hits'' in robot engineering and innovation this season, and then go into
+further depth on our specific implementation in later sections.
+
+\subsection{Drivebase}
+
+Switching from tank drive to swerve drive was a big decision, and meant
+we had to do a lot of things differently. First, we couldn't draw on any
+previous designs or code, and basically had to start fresh with a brand
+new drivebase design. Luckily, our Rev Robotics MAXSwerve
+modules~\cite{revswervemodule} had ample documentation and integration
+with WPILib, so we were able to build our drivebase prior to kickoff,
+and begin writing a library for controlling it early into the season.
+
+% TODO: add an image of the swerve drivebase
+
+
+\subsection{Vision}
+
+We vastly expanded our computer vision capabilities this year. In
+2023, we had a Microsoft webcam which streamed a low-resolution camera
+feed to the driver dashboard, and had no practical application for even
+basic vision tasks, such as identifying visual fiducials like april
+tags. This year, we got our hands on two Limelight v3s~\cite{limelight},
+which are a full low/no code computer vision solution, with
+out-of-the-box april tag detection. It also integrates seamlessly with
+our new Coral TPU~\cite{coral}, which provides hardware acceleration for
+Limelight to run neural networks such as note classifiers, which enable
+the detection of game pieces via machine learning algorithms, previously
+unfeasible for us. We also experimented with Microsoft's Kinect system,
+which, though originally designed for motion gaming on the Xbox, has
+proven to be an extremely powerful depth sensor and motion capture tool,
+a reputation proven by its use in research laboratories around the
+world~\cite{kinectpaper}. In the end, we made the controversial and
+difficult decision to abandon the Kinect in production this year due to
+extensive cost-benefit analysis determining that the opportunity cost of
+diverting precious build season time to it was too great of a risk.\@
+
+
+\subsection{Driver Controls}
+
+We also focused on creating an improved driver experience this year. One
+of our main issues in previous years was the lack of driver practice and
+experience operating the robot and its control interface. This was
+partly due to poor time management on our part and partly due to
+unintuitively designed controls and user interfaces. One of our main
+goals this year was to create a slick and easy driver experience to
+reduce as much human error and friction as possible. We implemented
+multiple separate drive modes and selectors to allow a customizable
+experience. The de facto standard for FRC robot driver dashboard is the
+Shuffleboard, included as part of the FRC Game Tools software
+distribution from LabView. This piece of archaic technology has an
+outdated user interface that can only provide rudimentary data and
+visualizations from the robot. This season however, we decided to create
+our own proprietary driver dashboard for the first time. This dashboard,
+dubbed ``Jankboard,'' has features like collision detection, 3D robot
+visualization, and links directly to our other driver features like
+speed and drive modes.
